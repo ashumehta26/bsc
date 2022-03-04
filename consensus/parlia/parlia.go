@@ -797,6 +797,8 @@ func (p *Parlia) FinalizeAndAssemble(chain consensus.ChainHeaderReader, header *
 		}
 	}
 	err := p.distributeIncoming(p.val, state, header, cx, &txs, &receipts, nil, &header.GasUsed, true)
+	fmt.Println("err when calling distributeIncoming")
+	fmt.Println(err)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -1117,7 +1119,11 @@ func (p *Parlia) distributeIncoming(val common.Address, state *state.StateDB, he
 	txs *[]*types.Transaction, receipts *[]*types.Receipt, receivedTxs *[]*types.Transaction, usedGas *uint64, mining bool) error {
 	fmt.Println("Inside distributeIncoming() in parlia.go")
 	coinbase := header.Coinbase
+	fmt.Println("coinbase:")
+	fmt.Println(coinbase)
 	balance := state.GetBalance(consensus.SystemAddress)
+	fmt.Println("balance")
+	fmt.Println(balance)
 	if balance.Cmp(common.Big0) <= 0 {
 		return nil
 	}
@@ -1125,6 +1131,8 @@ func (p *Parlia) distributeIncoming(val common.Address, state *state.StateDB, he
 	state.AddBalance(coinbase, balance)
 
 	doDistributeSysReward := state.GetBalance(common.HexToAddress(systemcontracts.SystemRewardContract)).Cmp(maxSystemBalance) < 0
+	fmt.Println("doDistributeSysReward")
+	fmt.Println(doDistributeSysReward)
 	if doDistributeSysReward {
 		var rewards = new(big.Int)
 		rewards = rewards.Rsh(balance, systemRewardPercent)
