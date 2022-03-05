@@ -1225,12 +1225,17 @@ func (p *Parlia) distributeToValidator(amount *big.Int, validator common.Address
 	data, err := p.validatorSetABI.Pack(method,
 		validator,
 	)
+	fmt.Println("data:")
+	fmt.Println(data)
+
 	if err != nil {
 		log.Error("Unable to pack tx for deposit", "error", err)
 		return err
 	}
 	// get system message
 	msg := p.getSystemMessage(header.Coinbase, common.HexToAddress(systemcontracts.ValidatorContract), data, amount)
+	fmt.Println("msg := p.getSystemMessage(header.Coinbase, common.HexToAddress(systemcontracts.ValidatorContract), data, amount)")
+	fmt.Println(msg)
 	// apply message
 	return p.applyTransaction(msg, state, header, chain, txs, receipts, receivedTxs, usedGas, mining)
 }
