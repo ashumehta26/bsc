@@ -1144,6 +1144,8 @@ func (p *Parlia) distributeIncoming(val common.Address, state *state.StateDB, he
 			log.Trace("distribute to system reward pool", "block hash", header.Hash(), "amount", rewards)
 			balance = balance.Sub(balance, rewards)
 		}
+		fmt.Println("rewards")
+		fmt.Println(rewards)
 	}
 	log.Trace("distribute to validator contract", "block hash", header.Hash(), "amount", balance)
 	return p.distributeToValidator(balance, val, state, header, chain, txs, receipts, receivedTxs, usedGas, mining)
