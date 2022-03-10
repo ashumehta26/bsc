@@ -1122,7 +1122,7 @@ func (p *Parlia) distributeIncoming(val common.Address, state *state.StateDB, he
 	fmt.Println("coinbase:")
 	fmt.Println(coinbase)
 	balance := state.GetBalance(consensus.SystemAddress)
-	fmt.Println("balance")
+	fmt.Println("Total balance")
 	fmt.Println(balance)
 	if balance.Cmp(common.Big0) <= 0 {
 		return nil
@@ -1146,6 +1146,8 @@ func (p *Parlia) distributeIncoming(val common.Address, state *state.StateDB, he
 		}
 		fmt.Println("rewards")
 		fmt.Println(rewards)
+		fmt.Println("New Balance")
+		fmt.Println(balance)
 	}
 	log.Trace("distribute to validator contract", "block hash", header.Hash(), "amount", balance)
 	return p.distributeToValidator(balance, val, state, header, chain, txs, receipts, receivedTxs, usedGas, mining)
